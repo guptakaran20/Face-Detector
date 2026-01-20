@@ -2,15 +2,17 @@ import { useEffect,useRef } from "react";
 import * as faceapi from "face-api.js";
 
 function useFaceDetection(videoRef, canvasRef) {
+    const MODEL_URL = import.meta.env.BASE_URL + "models"
+    
     const isDetectingRef = useRef(false);
 useEffect(() => {
     if (!videoRef.current || !canvasRef.current) return;
     const start = async () => {
       await Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
-        faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
-        faceapi.nets.faceExpressionNet.loadFromUri("/models"),
-        faceapi.nets.ageGenderNet.loadFromUri("/models"),
+        await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
+        faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL),
       ]);
       const run = await navigator.mediaDevices.getUserMedia({ video: true });
       videoRef.current.srcObject = run;
