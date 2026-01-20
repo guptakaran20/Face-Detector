@@ -7,7 +7,17 @@ function App() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
+  const startCamera = async () => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+    videoRef.current.srcObject = stream
+  } catch (err) {
+    console.error("Camera error:", err)
+  }
+}
+
   useFaceDetection(videoRef, canvasRef);
+  
 
   return (
     <>
@@ -16,7 +26,10 @@ function App() {
         <Header />
         <div className="relative group w-full max-w-180 mx-auto">
             <div id="video-container" className="relative w-fit mx-auto bg-slate-800 rounded-2xl overflow-hidden shadow-2xl border border-slate-700 ring-1 ring-white/10">
-                  <Video ref={videoRef} />
+              <button onClick={startCamera}>
+  Start Camera
+</button>    
+              <Video ref={videoRef} />
                   <Canvas ref={canvasRef} />      
             </div>
         </div>
