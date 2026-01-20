@@ -2,7 +2,7 @@ import { useEffect,useRef } from "react";
 import * as faceapi from "face-api.js";
 
 function useFaceDetection(videoRef, canvasRef) {
-    const MODEL_URL = import.meta.env.BASE_URL + "models"
+    const MODEL_URL = import.meta.env.BASE_URL + "/models";
     
     const isDetectingRef = useRef(false);
 useEffect(() => {
